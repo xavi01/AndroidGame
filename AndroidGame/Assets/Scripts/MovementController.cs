@@ -7,7 +7,6 @@ public class MovementController : MonoBehaviour
 
     public GameObject player;
 
-
     void Start()
     {
         
