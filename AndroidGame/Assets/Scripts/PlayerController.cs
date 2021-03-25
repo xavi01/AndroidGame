@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,6 +18,11 @@ public class PlayerController : MonoBehaviour
 
     private bool pause = false;
 
+    public int SaludInicial = 100;
+    public int SaludActual;
+    public Slider barraSlider;
+
+
     void Start()
     {
         middleM = true;
@@ -26,11 +32,16 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.velocity = new Vector3(0, 0, 4);
         m_Animator.SetTrigger("Run");
+
+        SaludActual = SaludInicial;
     }
 
     void Update()
     {
         m_Animator.SetTrigger("Run");
+
+        SaludActual = SaludActual - 1;
+        barraSlider.value = SaludActual;
     }
 
 
