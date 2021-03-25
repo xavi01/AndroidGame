@@ -50,25 +50,21 @@ public class PlayerController : MonoBehaviour
         m_Animator.SetTrigger("Jump");
 
         if (middleM == true)
-        {
-            
+        {         
             transform.position = new Vector3(left.transform.position.x, left.transform.position.y, left.transform.position.z);
             //float step = speed * Time.deltaTime;
             //transform.position = Vector3.MoveTowards(left.position, left.position, step);
             Debug.Log("MOURE esquerra");
             leftL = true;
-            middleM = false;
-      
+            middleM = false;  
         }
 
         if (rightR == true)
-        {
-           
+        {         
             Debug.Log("MOURE mitg");
             transform.position = new Vector3(middle.transform.position.x, middle.transform.position.y, middle.transform.position.z);
             middleM = true;
-            rightR = false;
-            
+            rightR = false;           
         }
 
         if (leftL == true)
@@ -80,8 +76,7 @@ public class PlayerController : MonoBehaviour
     public void Right()
     {
         if (middleM == true)
-        {
-            
+        {    
             Debug.Log("MOURE dreta");
             transform.position = new Vector3(right.transform.position.x, right.transform.position.y, right.transform.position.z);
             rightR = true;
@@ -90,8 +85,7 @@ public class PlayerController : MonoBehaviour
         }
 
         if (leftL == true)
-        {
-            
+        {           
             Debug.Log("MOURE mitg");
             transform.position = new Vector3(middle.transform.position.x, middle.transform.position.y, middle.transform.position.z);
             middleM = true;
@@ -117,7 +111,15 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector3(0, 0, 0);
             pause = true;
         }
+    }
 
-
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("PUM"))
+        {
+            SaludActual = SaludActual + 150;
+            barraSlider.value = SaludActual;
+            Debug.Log("pum");            
+        }
     }
 }
