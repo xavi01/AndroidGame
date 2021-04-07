@@ -22,6 +22,11 @@ public class PlayerController : MonoBehaviour
     public int SaludActual;
     public Slider barraSlider;
 
+    public Text puntuacioText;
+    public Text RecordText;
+    private int puntuacio = 0;
+    private int record; 
+
 
     void Start()
     {
@@ -34,6 +39,15 @@ public class PlayerController : MonoBehaviour
         m_Animator.SetTrigger("Run");
 
         SaludActual = SaludInicial;
+
+        puntuacioText.text = "PUNTUACIO: " + puntuacio.ToString();
+        puntuacio = puntuacio + 1;
+
+        RecordText.text = "RECORD: " + record.ToString();
+        record = PlayerPrefs.GetInt("RecordGuardat");
+        
+   
+      
     }
 
     void Update()
@@ -42,7 +56,15 @@ public class PlayerController : MonoBehaviour
 
         SaludActual = SaludActual - 1;
         barraSlider.value = SaludActual;
+
     }
+
+    void Guardar()
+    {
+       PlayerPrefs.SetInt("RecordGuardat", puntuacio);
+    }
+
+  
 
 
     public void Left()
