@@ -11,6 +11,13 @@ public class Velocidad : MonoBehaviour
     public GameObject exit;
     public GameObject background;
 
+    public GameObject record;
+    public GameObject recordfoto;
+    public GameObject puntuacion;
+    public GameObject puntuacionfoto;
+    public GameObject health;
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -32,6 +39,12 @@ public class Velocidad : MonoBehaviour
             background.SetActive(false);
             restart.SetActive(false);
             exit.SetActive(false);
+
+            record.SetActive(true);
+            recordfoto.SetActive(true);
+            puntuacion.SetActive(true);
+            puntuacionfoto.SetActive(true);
+            health.SetActive(true);
             rb.velocity = new Vector3(0, 0, 4);
             pause = false;
         }
@@ -40,6 +53,12 @@ public class Velocidad : MonoBehaviour
             background.SetActive(true);
             restart.SetActive(true);
             exit.SetActive(true);
+
+            record.SetActive(false);
+            recordfoto.SetActive(false);
+            puntuacion.SetActive(false);
+            puntuacionfoto.SetActive(false);
+            health.SetActive(false);
             rb.velocity = new Vector3(0, 0, 0);
             pause = true;
         }

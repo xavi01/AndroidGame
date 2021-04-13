@@ -30,9 +30,13 @@ public class PlayerController : MonoBehaviour
     public HealthBar healthBar;
     private float life;
 
+    private bool seguir;
+
 
     void Start()
     {
+        seguir= true;
+
         middleM = true;
         rightR = false;
         leftL = false;
@@ -43,11 +47,10 @@ public class PlayerController : MonoBehaviour
 
 
 
-        puntuacioText.text = "PUNTUACIO: " + puntuacio;
-        RecordText.text = "RECORD: " + record;
-
+        puntuacioText.text = "" + puntuacio;
+     
         record = PlayerPrefs.GetInt("RecordGuardat");
-        RecordText.text = "RECORD: " + record;
+        RecordText.text = "" + record;
  
 
 
@@ -58,18 +61,19 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        puntuacio = puntuacio + 1;
-        puntuacioText.text = "PUNTUACIO: " + puntuacio;
+        if (seguir)
+        {
+            puntuacio = puntuacio + 1;
+            puntuacioText.text = ""+ puntuacio;
 
-        m_Animator.SetTrigger("Run");
+            m_Animator.SetTrigger("Run");
 
+            life = life - 1;
+            Debug.Log("Life player: " + life);
+            currentHealth = currentHealth - 1;
+            healthBar.SetHealth(currentHealth);
 
-
-        life = life - 1;
-        Debug.Log("Life player: " + life);
-
-        currentHealth = currentHealth - 1;
-        healthBar.SetHealth(currentHealth);
+        }
 
         if (life <= 0)
         {
@@ -81,7 +85,10 @@ public class PlayerController : MonoBehaviour
 
     void Guardar()
     {
-       PlayerPrefs.SetInt("RecordGuardat", puntuacio);
+        if (puntuacio > record)
+        {
+            PlayerPrefs.SetInt("RecordGuardat", puntuacio);
+        }
     }
 
   
@@ -146,12 +153,14 @@ public class PlayerController : MonoBehaviour
         if (pause)
         {
             rb.velocity = new Vector3(0, 0, 4);
+            seguir = true;
             pause = false;
-            Guardar();
+           
         }
         else
         {
             rb.velocity = new Vector3(0, 0, 0);
+            seguir = false;
             pause = true;
         }
     }
@@ -166,6 +175,11 @@ public class PlayerController : MonoBehaviour
             currentHealth = currentHealth + 100;
             healthBar.SetHealth(currentHealth);
             Debug.Log("pum");            
+        }
+
+        if(other.gameObject.CompareTag("Morir")){
+            Guardar();
+            SceneManager.LoadScene("GameOver");
         }
     }
 }
