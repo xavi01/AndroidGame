@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -18,14 +19,16 @@ public class PlayerController : MonoBehaviour
 
     private bool pause = false;
 
-    public int SaludInicial = 100;
-    public int SaludActual;
-    public Slider barraSlider;
 
     public Text puntuacioText;
     public Text RecordText;
     private int puntuacio = 0;
-    private int record; 
+    private int record;
+
+    private int maxHealth = 100;
+    private int currentHealth;
+    public HealthBar healthBar;
+    private float life;
 
 
     void Start()
@@ -38,24 +41,39 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector3(0, 0, 4);
         m_Animator.SetTrigger("Run");
 
-        SaludActual = SaludInicial;
 
-        puntuacioText.text = "PUNTUACIO: " + puntuacio.ToString();
-        puntuacio = puntuacio + 1;
+
+        puntuacioText.text = "PUNTUACIO: " + puntuacio;
+        
 
         RecordText.text = "RECORD: " + record.ToString();
         record = PlayerPrefs.GetInt("RecordGuardat");
-        
-   
-      
+
+
+        life = 100;
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     void Update()
     {
+        puntuacio = puntuacio + 1/100;
+        puntuacioText.text = "PUNTUACIO: " + puntuacio;
+
         m_Animator.SetTrigger("Run");
 
-        SaludActual = SaludActual - 1;
-        barraSlider.value = SaludActual;
+
+
+        life = life - 1;
+        Debug.Log("Life player: " + life);
+
+        currentHealth = currentHealth - 1;
+        healthBar.SetHealth(currentHealth);
+
+        if (life <= 0)
+        {
+            SceneManager.LoadScene("GameOver");   
+        }
 
     }
 
@@ -127,6 +145,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector3(0, 0, 4);
             pause = false;
+            Guardar();
         }
         else
         {
@@ -139,8 +158,11 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("PUM"))
         {
-            SaludActual = SaludActual + 150;
-            barraSlider.value = SaludActual;
+            life = life + 100;
+            Debug.Log("Life player: " + life);
+
+            currentHealth = currentHealth + 100;
+            healthBar.SetHealth(currentHealth);
             Debug.Log("pum");            
         }
     }
