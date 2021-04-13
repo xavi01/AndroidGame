@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     private int puntuacio = 0;
     private int record;
 
-    private int maxHealth = 100;
+    private int maxHealth = 1000;
     private int currentHealth;
     public HealthBar healthBar;
     private float life;
@@ -44,20 +44,21 @@ public class PlayerController : MonoBehaviour
 
 
         puntuacioText.text = "PUNTUACIO: " + puntuacio;
-        
+        RecordText.text = "RECORD: " + record;
 
-        RecordText.text = "RECORD: " + record.ToString();
         record = PlayerPrefs.GetInt("RecordGuardat");
+        RecordText.text = "RECORD: " + record;
+ 
 
 
-        life = 100;
+        life = 1000;
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
     }
 
     void Update()
     {
-        puntuacio = puntuacio + 1/100;
+        puntuacio = puntuacio + 1;
         puntuacioText.text = "PUNTUACIO: " + puntuacio;
 
         m_Animator.SetTrigger("Run");
@@ -72,6 +73,7 @@ public class PlayerController : MonoBehaviour
 
         if (life <= 0)
         {
+            Guardar();
             SceneManager.LoadScene("GameOver");   
         }
 
