@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - PUM
+  - PAM
   layers:
   - Default
   - TransparentFX

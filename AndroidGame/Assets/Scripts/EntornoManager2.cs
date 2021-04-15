@@ -34,7 +34,7 @@ public class EntornoManager2 : MonoBehaviour
     public void SpawnTile(int tileIndex)
     {
         GameObject go = Instantiate(tilePrefabs[tileIndex], transform.forward * zSpawn, transform.rotation);
-        go.transform.position = new Vector3(+5, go.transform.position.y, go.transform.position.z);
+        go.transform.position = new Vector3(+4, go.transform.position.y+1, go.transform.position.z);
         activeTiles.Add(go);
         zSpawn += tileLength;
     }
